@@ -1308,6 +1308,17 @@ class GroupProjectManager(ListMixin, RESTManager):
     )
 
 
+class GroupRunner(ObjectDeleteMixin, RESTObject):
+    pass
+
+
+class GroupRunnerManager(NoUpdateMixin, RESTManager):
+    _path = "/groups/%(group_id)s/runners"
+    _obj_cls = GroupRunner
+    _from_parent_attrs = {"group_id": "id"}
+    _create_attrs = (("runner_id",), tuple())
+
+
 class GroupSubgroup(RESTObject):
     pass
 
