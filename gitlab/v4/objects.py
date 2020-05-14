@@ -4358,9 +4358,7 @@ class ProjectApprovalRuleManager(
 
 
 class ProjectDeployment(RESTObject, SaveMixin):
-    _managers = (
-        ("mergerequests", "ProjectDeploymentMergeRequestsManager"),
-    )
+    _managers = (("mergerequests", "ProjectDeploymentMergeRequestsManager"),)
 
 
 class ProjectDeploymentManager(RetrieveMixin, CreateMixin, UpdateMixin, RESTManager):
