@@ -4358,15 +4358,27 @@ class ProjectApprovalRuleManager(
 
 
 class ProjectDeployment(RESTObject, SaveMixin):
-    pass
+    _managers = (
+        ("mergerequests", "ProjectDeploymentMergeRequestsManager"),
+    )
 
 
 class ProjectDeploymentManager(RetrieveMixin, CreateMixin, UpdateMixin, RESTManager):
     _path = "/projects/%(project_id)s/deployments"
     _obj_cls = ProjectDeployment
     _from_parent_attrs = {"project_id": "id"}
-    _list_filters = ("order_by", "sort")
+    _list_filters = ("order_by", "sort", "environment", "status")
     _create_attrs = (("sha", "ref", "tag", "status", "environment"), tuple())
+
+
+class ProjectDeploymentMergeRequests(ProjectMergeRequest):
+    pass
+
+
+class ProjectDeploymentMergeRequestsManager(ListMixin, RESTManager):
+    _path = "/projects/%(project_id)s/deployments/%(deployment_id)s/merge_requests"
+    _obj_cls = ProjectDeploymentMergeRequests
+    _from_parent_attrs = {"deployment_id": "id", "project_id": "project_id"}
 
 
 class ProjectProtectedBranch(ObjectDeleteMixin, RESTObject):
